@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 Entrada de Datos - Agente IA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #4285f4ff; /* Color de fondo pedido */
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 100%;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        input[type="number"] {
+            appearance: textfield;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+        }
+        
+        button {
+    width: 100%;
+    padding: 15px;
+    background: #fff492ff; /* color pedido */
+    color: #333;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:active { transform: translateY(0); }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .mensaje {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+        
+        .mensaje.exito {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .mensaje.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 12px 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #1565c0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Entrada de Datos</h1>
+        <p class="subtitle">Completa el formulario para enviar datos al agente</p>
+        
+        <div class="info-box">
+            ℹ️ Indica el tipo de entrada, los valores (uno o varios separados por coma) y el número de tarea.
+        </div>
+        
+        <form id="formularioDatos">
+            <!-- 1. tipoEntrada -->
+            <div class="form-group">
+                <label>🔢 Tipo de entrada</label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="tipoEntrada" value="NRO_MOV" required>
+                        NRO_MOV
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="tipoEntrada" value="NRO_DEUDA">
+                        NRO_DEUDA
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="tipoEntrada" value="DEBT_ID">
+                        DEBT_ID
+                    </label>
+                </div>
+            </div>
+
+            <!-- 2. Valores -->
+            <div class="form-group">
+                <label for="valores">📥 Valores (uno o varios, separados por coma)</label>
+                <textarea 
+                    id="valores" 
+                    name="valores" 
+                    rows="3"
+                    placeholder="Ej: 12345, 67890, 112233"
+                    required
+                ></textarea>
+            </div>
+
+            <!-- 3. nroTarea -->
+            <div class="form-group">
+                <label for="nroTarea">🧾 Número de tarea</label>
+                <input 
+                    type="number" 
+                    id="nroTarea" 
+                    name="nroTarea" 
+                    placeholder="Ej: 101"
+                    min="0"
+                    required
+                >
+            </div>
+
+            <button type="submit" id="btnEnviar">
+                Enviar datos
+            </button>
+
+            <div id="mensaje" class="mensaje"></div>
+        </form>
+    </div>
+
+<script>
+    const form = document.getElementById('formularioDatos');
+    const btn = document.getElementById('btnEnviar');
+    const mensaje = document.getElementById('mensaje');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        mensaje.style.display = 'none';
+        btn.disabled = true;
+        btn.innerHTML = 'Enviando... <span class="loading"></span>';
+
+        const formData = new FormData(form);
+        const data = {
+            tipoEntrada: formData.get('tipoEntrada'),
+            valorEntrada: formData.get('valores'),   // ojo: mismo nombre que usa tu Code
+            nroTarea: formData.get('nroTarea'),
+        };
+
+        try {
+            const res = await fetch('http://verdi-flows.melisystems.com/webhook/0a08c82e-89de-435b-a7cc-ea9b0eb2f8d6', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
+
+            if (!res.ok) throw new Error('Error en la respuesta del servidor');
+
+            mensaje.className = 'mensaje exito';
+            mensaje.textContent = 'Datos enviados correctamente.';
+            mensaje.style.display = 'block';
+            form.reset();
+        } catch (err) {
+            console.error(err);
+            mensaje.className = 'mensaje error';
+            mensaje.textContent = 'Ocurrió un error al enviar los datos.';
+            mensaje.style.display = 'block';
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Enviar datos';
+        }
+    });
+</script>
+</body>
+</html>
