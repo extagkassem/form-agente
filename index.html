@@ -252,32 +252,33 @@
             nroTarea: formData.get('nroTarea'),
         };
 
-        try {
-            const res = await fetch('https://hook.make.com/abcDEFghijKLMNOPqrstu', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data),
-            });
+try {
+    const res = await fetch('https://web.furycloud.io/api/proxy/verdi_flows/webhook-test/0a08c82e-89de-435b-a7cc-ea9b0eb2f8d6', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+    });
 
-            if (!res.ok) throw new Error('Error en la respuesta del servidor');
+    if (!res.ok) throw new Error('Error en la respuesta del servidor');
 
-            mensaje.className = 'mensaje exito';
-            mensaje.textContent = 'Datos enviados correctamente.';
-            mensaje.style.display = 'block';
-            form.reset();
-        } catch (err) {
-            console.error(err);
-            mensaje.className = 'mensaje error';
-            mensaje.textContent = 'Ocurrió un error al enviar los datos.';
-            mensaje.style.display = 'block';
-        } finally {
-            btn.disabled = false;
-            btn.textContent = 'Enviar datos';
-        }
+    mensaje.className = 'mensaje exito';
+    mensaje.textContent = 'Datos enviados correctamente.';
+    mensaje.style.display = 'block';
+    form.reset();
+} catch (err) {
+    console.error(err);
+    mensaje.className = 'mensaje error';
+    mensaje.textContent = 'Ocurrió un error al enviar los datos.';
+    mensaje.style.display = 'block';
+} finally {
+    btn.disabled = false;
+    btn.textContent = 'Enviar datos';
+}
     });
 </script>
 </body>
 </html>
+
 
 
 
